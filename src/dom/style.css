@@ -9,21 +9,20 @@
   font-family: MyFont;
 }
 
-#something {
-  font-size: 5rem;
-  margin: 10vw;
-}
-
 #taskList {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
 }
 .task {
-  width: 15vw;
+  display: flex;
+  font-size: 0.9rem;
+  line-height: 1.5rem;
+  width: 30vw;
   background-color: #f3f3f3;
   border-radius: 15px;
   box-shadow: #cbd0d8 1.95px 1.95px 2.6px;
   padding: 2vw;
   margin: 2vw;
+  justify-content: center;
 }
