@@ -1,6 +1,7 @@
-import "./style.css";
+import { app } from "./app/index.js";
+import { createUI } from "./dom/index.js";
 
-const something = document.createElement("div");
-something.id = "something";
-something.textContent = "That's something";
-document.body.append(something);
+const content = document.createElement("div");
+content.id = "content";
+document.body.append(content);
+createUI();

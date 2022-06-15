@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "MyFont";
+  src: url("./Roboto.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+* {
+  font-family: MyFont;
+}
+
+#something {
+  font-size: 5rem;
+  margin: 10vw;
+}
+
+#taskList {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.task {
+  width: 15vw;
+  background-color: #f3f3f3;
+  border-radius: 15px;
+  box-shadow: #cbd0d8 1.95px 1.95px 2.6px;
+  padding: 2vw;
+  margin: 2vw;
+}
