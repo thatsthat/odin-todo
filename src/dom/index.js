@@ -56,3 +56,21 @@ function drawNewTaskButton() {
   button.append(icon, text);
   document.querySelector("#content").append(button);
 }
+
+function createTaskInputForm() {
+  const newTaskForm = document.createElement("div");
+  newTaskForm.classList.add("newTaskForm");
+  // Create a sub container with task name and due date
+  const formData = document.createElement("div");
+  formData.classList.add("taskData");
+  const name = document.createElement("div");
+  const date = document.createElement("div");
+  name.textContent = taskPar.title;
+  date.textContent = taskPar.dueDate;
+  formData.append(name, date);
+  // Create check button (radio input button)
+  const checkButton = document.createElement("span");
+  checkButton.classList.add("mdi", "mdi-radiobox-blank");
+  // Insert everything into task container
+  newTaskForm.append(checkButton, formData);
+}
