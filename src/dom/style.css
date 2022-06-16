@@ -18,13 +18,25 @@
   display: flex;
   font-size: 0.9rem;
   line-height: 1.5rem;
-  width: 30vw;
-  background-color: #f3f3f3;
+  width: 8rem;
   border-radius: 15px;
-  box-shadow: #cbd0d8 1.95px 1.95px 2.6px;
-  padding: 2vw;
-  margin: 2vw;
+  padding: 0.5rem;
+  margin: 0.2rem;
 }
+.task:hover {
+  background-color: #f3f3f3;
+}
+
 .taskData {
   margin-left: 2vw;
+}
+.newTaskButton {
+  align-items: center;
+  color: blue;
+}
+.newTaskButtonText {
+  margin-left: 2vw;
+}
+.mdi {
+  font-size: 1.5rem;
 }

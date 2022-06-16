@@ -4,6 +4,8 @@ import { Task } from "../app/index.js";
 import { format, differenceInDays } from "date-fns";
 
 function createUI() {
+  // Insert new task butto at the top
+  drawNewTaskButton();
   const taskList = document.createElement("div");
   taskList.id = "taskList";
   document.querySelector("#content").appendChild(taskList);
@@ -41,4 +43,16 @@ function showTask(taskPar) {
   task.append(checkButton, taskData);
 
   document.querySelector("#taskList").appendChild(task);
+}
+
+function drawNewTaskButton() {
+  const button = document.createElement("div");
+  button.classList.add("newTaskButton", "task");
+  const icon = document.createElement("span");
+  icon.classList.add("mdi", "mdi-checkbox-marked-circle-plus-outline");
+  const text = document.createElement("div");
+  text.textContent = "Add a task";
+  text.classList.add("newTaskButtonText");
+  button.append(icon, text);
+  document.querySelector("#content").append(button);
 }
