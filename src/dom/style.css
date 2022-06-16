@@ -24,5 +24,7 @@
   box-shadow: #cbd0d8 1.95px 1.95px 2.6px;
   padding: 2vw;
   margin: 2vw;
-  justify-content: center;
+}
+.taskData {
+  margin-left: 2vw;
 }
