@@ -1,4 +1,5 @@
 import "./style.css";
+import "@mdi/font/css/materialdesignicons.css";
 import { Task } from "../app/index.js";
 import { format, differenceInDays } from "date-fns";
 
@@ -34,8 +35,8 @@ function showTask(taskPar) {
   date.textContent = taskPar.dueDate;
   taskData.append(name, date);
   // Create check button (radio input button)
-  const checkButton = document.createElement("input");
-  checkButton.type = "radio";
+  const checkButton = document.createElement("span");
+  checkButton.classList.add("mdi", "mdi-radiobox-blank");
   // Insert everything into task container
   task.append(checkButton, taskData);
 
