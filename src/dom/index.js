@@ -19,12 +19,12 @@ function createUI() {
   const task1 = Task("Task 1", "this is a test", date1, "high");
   const task2 = Task("Task 2", "this is another test", date2, "low");
   // Plot them
-  renderTask(task1);
   renderTask(task2);
+  renderTask(task1);
 }
 export { createUI };
 
-function renderTask(taskPar) {
+function renderTask(taskPar = []) {
   // Create task container
   const task = document.createElement("div");
   task.classList.add("task");
@@ -39,22 +39,28 @@ function renderTask(taskPar) {
   const editName = document.createElement("input");
   editName.type = "text";
   editName.placeholder = "Title";
-  const editDate = document.createElement("div");
-  const editDateIcon = document.createElement("span");
-  editDateIcon.classList.add("mdi", "mdi-calendar");
-  const editDateInput = document.createElement("input");
-  editDateInput.type = "date";
-  editDate.append(editDateIcon, editDateInput);
-  editName.classList.add("hidden");
-  editDate.classList.add("hidden");
+  //const editDate = document.createElement("div");
+  //const editDateIcon = document.createElement("span");
+  //editDateIcon.classList.add("mdi", "mdi-calendar");
+  const editDate = document.createElement("input");
+  editDate.type = "date";
+  //editDate.append(editDateIcon, editDateInput);
   taskData.append(name, date, editName, editDate);
   // Create check button (radio input button)
   const checkButton = document.createElement("span");
   checkButton.classList.add("mdi", "mdi-radiobox-blank");
+  // If it's a new task show edit fields, otherwise show title/date
+  if (taskPar.length === 0) {
+    name.classList.add("hidden");
+    date.classList.add("hidden");
+  } else {
+    editName.classList.add("hidden");
+    editDate.classList.add("hidden");
+  }
   // Insert everything into task container
   task.append(checkButton, taskData);
 
-  document.querySelector("#taskList").appendChild(task);
+  document.querySelector("#taskList").prepend(task);
 }
 
 function drawNewTaskButton() {
@@ -67,22 +73,8 @@ function drawNewTaskButton() {
   text.classList.add("newTaskButtonText");
   button.append(icon, text);
   document.querySelector("#content").append(button);
-}
-
-function createTaskInputForm() {
-  const newTaskForm = document.createElement("div");
-  newTaskForm.classList.add("newTaskForm");
-  // Create a sub container with task name and due date
-  const formData = document.createElement("div");
-  formData.classList.add("taskData");
-  const name = document.createElement("div");
-  const date = document.createElement("div");
-  name.textContent = taskPar.title;
-  date.textContent = taskPar.dueDate;
-  formData.append(name, date);
-  // Create check button (radio input button)
-  const checkButton = document.createElement("span");
-  checkButton.classList.add("mdi", "mdi-radiobox-blank");
-  // Insert everything into task container
-  newTaskForm.append(checkButton, formData);
+  // Add listener
+  button.addEventListener("click", (event) => {
+    renderTask();
+  });
 }
