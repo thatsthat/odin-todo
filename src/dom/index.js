@@ -4,7 +4,7 @@ import { Task } from "../app/index.js";
 import { format, differenceInDays } from "date-fns";
 
 function createUI() {
-  // Insert new task butto at the top
+  // Insert new task button at the top
   drawNewTaskButton();
   const taskList = document.createElement("div");
   taskList.id = "taskList";
@@ -19,12 +19,12 @@ function createUI() {
   const task1 = Task("Task 1", "this is a test", date1, "high");
   const task2 = Task("Task 2", "this is another test", date2, "low");
   // Plot them
-  showTask(task1);
-  showTask(task2);
+  renderTask(task1);
+  renderTask(task2);
 }
 export { createUI };
 
-function showTask(taskPar) {
+function renderTask(taskPar) {
   // Create task container
   const task = document.createElement("div");
   task.classList.add("task");
@@ -35,7 +35,19 @@ function showTask(taskPar) {
   const date = document.createElement("div");
   name.textContent = taskPar.title;
   date.textContent = taskPar.dueDate;
-  taskData.append(name, date);
+  // Create form to create/edit title and date
+  const editName = document.createElement("input");
+  editName.type = "text";
+  editName.placeholder = "Title";
+  const editDate = document.createElement("div");
+  const editDateIcon = document.createElement("span");
+  editDateIcon.classList.add("mdi", "mdi-calendar");
+  const editDateInput = document.createElement("input");
+  editDateInput.type = "date";
+  editDate.append(editDateIcon, editDateInput);
+  editName.classList.add("hidden");
+  editDate.classList.add("hidden");
+  taskData.append(name, date, editName, editDate);
   // Create check button (radio input button)
   const checkButton = document.createElement("span");
   checkButton.classList.add("mdi", "mdi-radiobox-blank");
