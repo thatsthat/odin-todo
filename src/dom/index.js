@@ -32,45 +32,45 @@ function renderTask(taskPar = []) {
   taskData.classList.add("taskData");
   const name = document.createElement("div");
   const date = document.createElement("div");
+  const viewElems = document.createElement("div");
   name.textContent = taskPar.title;
-  name.classList.add("viewElem");
   date.textContent = taskPar.dueDate;
-  date.classList.add("viewElem");
+
   // Create form to create/edit title and date
   const editName = document.createElement("input");
   editName.type = "text";
   editName.classList.add("editElem");
   editName.placeholder = "Title";
-  //const editDate = document.createElement("div");
-  //const editDateIcon = document.createElement("span");
-  //editDateIcon.classList.add("mdi", "mdi-calendar");
   const editDate = document.createElement("input");
   editDate.classList.add("editElem");
   editDate.type = "date";
-  //editDate.append(editDateIcon, editDateInput);
-  taskData.append(name, date, editName, editDate);
+  const editElems = document.createElement("div");
+
   // Create check button (radio input button)
   const checkButton = document.createElement("span");
   checkButton.classList.add("mdi", "mdi-radiobox-blank");
   // If it's a new task show edit fields, otherwise show title/date
   if (taskPar.length === 0) {
-    name.classList.add("hidden");
-    date.classList.add("hidden");
+    viewElems.classList.add("hidden");
+    editElems.classList.add("visible");
   } else {
-    editName.classList.add("hidden");
-    editDate.classList.add("hidden");
+    viewElems.classList.add("visible");
+    editElems.classList.add("hidden");
   }
   // Insert everything into task container
+  viewElems.append(name, date);
+  editElems.append(editName, editDate);
+  taskData.append(viewElems, editElems);
   task.append(checkButton, taskData);
 
   // Add a click event listener to the main task div container
   task.addEventListener("click", (event) => {
-    event.currentTarget
-      .querySelectorAll(".viewElem")
-      .forEach((node) => node.classList.add("hidden"));
-    event.currentTarget
-      .querySelectorAll(".editElem")
-      .forEach((node) => node.classList.remove("hidden"));
+    const hiddenElem = event.currentTarget.querySelector(".hidden");
+    const visibleElem = event.currentTarget.querySelector(".visible");
+    visibleElem.classList.add("hidden");
+    visibleElem.classList.remove("visible");
+    hiddenElem.classList.add("visible");
+    hiddenElem.classList.remove("hidden");
   });
 
   // Add the task at the top of the stack
