@@ -6,21 +6,20 @@ import { format, differenceInDays } from "date-fns";
 function createUI() {
   // Insert new task button at the top
   drawNewTaskButton();
+  // Create tasks list view
   const taskList = document.createElement("div");
   taskList.id = "taskList";
   document.querySelector("#content").appendChild(taskList);
+
   // Hardcode a couple of tasks to start
   const date1 = format(new Date(2022, 5, 20), "dd-MM-yyyy");
-  const date2 = format(new Date(2022, 6, 25), "dd-MM-yyyy");
-
-  const dif1 = differenceInDays(date1, new Date());
-  const dif2 = differenceInDays(date2, new Date());
-
   const task1 = Task("Task 1", "this is a test", date1, "high");
+  const date2 = format(new Date(2022, 6, 25), "dd-MM-yyyy");
   const task2 = Task("Task 2", "this is another test", date2, "low");
-  // Plot them
-  renderTask(task2);
-  renderTask(task1);
+  // Array containing all tasks
+  const tasks = [task1, task2];
+  // Plot all the tasks in the array
+  for (let ind in tasks) renderTask(tasks[tasks.length - ind - 1]);
 }
 export { createUI };
 
@@ -34,15 +33,19 @@ function renderTask(taskPar = []) {
   const name = document.createElement("div");
   const date = document.createElement("div");
   name.textContent = taskPar.title;
+  name.classList.add("viewElem");
   date.textContent = taskPar.dueDate;
+  date.classList.add("viewElem");
   // Create form to create/edit title and date
   const editName = document.createElement("input");
   editName.type = "text";
+  editName.classList.add("editElem");
   editName.placeholder = "Title";
   //const editDate = document.createElement("div");
   //const editDateIcon = document.createElement("span");
   //editDateIcon.classList.add("mdi", "mdi-calendar");
   const editDate = document.createElement("input");
+  editDate.classList.add("editElem");
   editDate.type = "date";
   //editDate.append(editDateIcon, editDateInput);
   taskData.append(name, date, editName, editDate);
@@ -60,6 +63,17 @@ function renderTask(taskPar = []) {
   // Insert everything into task container
   task.append(checkButton, taskData);
 
+  // Add a click event listener to the main task div container
+  task.addEventListener("click", (event) => {
+    event.currentTarget
+      .querySelectorAll(".viewElem")
+      .forEach((node) => node.classList.add("hidden"));
+    event.currentTarget
+      .querySelectorAll(".editElem")
+      .forEach((node) => node.classList.remove("hidden"));
+  });
+
+  // Add the task at the top of the stack
   document.querySelector("#taskList").prepend(task);
 }
 
