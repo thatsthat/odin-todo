@@ -32,7 +32,6 @@ function renderTask(taskPar = []) {
   taskData.classList.add("taskData");
   const name = document.createElement("div");
   const date = document.createElement("div");
-  const viewElems = document.createElement("div");
   name.textContent = taskPar.title;
   date.textContent = taskPar.dueDate;
 
@@ -41,14 +40,16 @@ function renderTask(taskPar = []) {
   editName.type = "text";
   editName.classList.add("editElem");
   editName.placeholder = "Title";
+  // Add listener to store value into task object
+
   const editDate = document.createElement("input");
   editDate.classList.add("editElem");
   editDate.type = "date";
+
+  const viewElems = document.createElement("div");
+  viewElems.append(name, date);
   const editElems = document.createElement("div");
 
-  // Create check button (radio input button)
-  const checkButton = document.createElement("span");
-  checkButton.classList.add("mdi", "mdi-radiobox-blank");
   // If it's a new task show edit fields, otherwise show title/date
   if (taskPar.length === 0) {
     viewElems.classList.add("hidden");
@@ -57,10 +58,15 @@ function renderTask(taskPar = []) {
     viewElems.classList.add("visible");
     editElems.classList.add("hidden");
   }
-  // Insert everything into task container
-  viewElems.append(name, date);
+
   editElems.append(editName, editDate);
   taskData.append(viewElems, editElems);
+
+  // Create check button (radio input button)
+  const checkButton = document.createElement("span");
+  checkButton.classList.add("mdi", "mdi-radiobox-blank");
+
+  // Insert everything into task container;
   task.append(checkButton, taskData);
 
   // Add a click event listener to the main task div container
