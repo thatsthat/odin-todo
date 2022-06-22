@@ -12,9 +12,9 @@ function createUI() {
   document.querySelector("#content").appendChild(taskList);
 
   // Hardcode a couple of tasks to start
-  const date1 = format(new Date(2022, 5, 20), "dd-MM-yyyy");
+  const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
   const task1 = Task("Task 1", "this is a test", date1, "high");
-  const date2 = format(new Date(2022, 6, 25), "dd-MM-yyyy");
+  const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
   const task2 = Task("Task 2", "this is another test", date2, "low");
   // Array containing all tasks
   const tasks = [task1, task2];
@@ -34,24 +34,28 @@ function renderTask(taskPar = []) {
   const name = document.createElement("div");
   const date = document.createElement("div");
   name.textContent = taskPar.title;
-  date.textContent = taskPar.dueDate;
+  date.textContent = format(new Date(taskPar.dueDate), "dd-MM-yyyy");
 
   // Create form to create/edit title and date
   const editName = document.createElement("input");
   editName.type = "text";
   editName.placeholder = "Title";
+  editName.value = taskPar.title;
 
   // Add listener to store value into task object
   editName.addEventListener("change", (event) => {
     taskPar.title = event.target.value;
+    name.textContent = taskPar.title;
   });
 
   const editDate = document.createElement("input");
   editDate.type = "date";
+  editDate.value = taskPar.dueDate;
 
   // Add listener to store value into task object
   editDate.addEventListener("change", (event) => {
-    taskPar.date = event.target.value;
+    taskPar.dueDate = event.target.value;
+    date.textContent = format(new Date(taskPar.dueDate), "dd-MM-yyyy");
   });
 
   const viewElems = document.createElement("div");
