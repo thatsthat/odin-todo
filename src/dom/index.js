@@ -27,6 +27,7 @@ function renderTask(taskPar = []) {
   // Create task container
   const task = document.createElement("div");
   task.classList.add("task");
+  task.setAttribute("tabindex", "0"); // Make it focusable
   // Create a sub container with task name and due date
   const taskData = document.createElement("div");
   taskData.classList.add("taskData");
@@ -38,24 +39,32 @@ function renderTask(taskPar = []) {
   // Create form to create/edit title and date
   const editName = document.createElement("input");
   editName.type = "text";
-  editName.classList.add("editElem");
   editName.placeholder = "Title";
+
   // Add listener to store value into task object
+  editName.addEventListener("change", (event) => {
+    taskPar.title = event.target.value;
+  });
 
   const editDate = document.createElement("input");
-  editDate.classList.add("editElem");
   editDate.type = "date";
 
+  // Add listener to store value into task object
+  editDate.addEventListener("change", (event) => {
+    taskPar.date = event.target.value;
+  });
+
   const viewElems = document.createElement("div");
+  viewElems.classList.add("viewElems");
   viewElems.append(name, date);
+
   const editElems = document.createElement("div");
+  editElems.classList.add("editElems");
 
   // If it's a new task show edit fields, otherwise show title/date
-  if (taskPar.length === 0) {
+  if (taskPar.title.length === 0) {
     viewElems.classList.add("hidden");
-    editElems.classList.add("visible");
   } else {
-    viewElems.classList.add("visible");
     editElems.classList.add("hidden");
   }
 
@@ -69,14 +78,19 @@ function renderTask(taskPar = []) {
   // Insert everything into task container;
   task.append(checkButton, taskData);
 
-  // Add a click event listener to the main task div container
-  task.addEventListener("click", (event) => {
-    const hiddenElem = event.currentTarget.querySelector(".hidden");
-    const visibleElem = event.currentTarget.querySelector(".visible");
-    visibleElem.classList.add("hidden");
-    visibleElem.classList.remove("visible");
-    hiddenElem.classList.add("visible");
-    hiddenElem.classList.remove("hidden");
+  // Add a focus event listener to the main task div container
+  task.addEventListener("focusin", (event) => {
+    event.currentTarget.querySelector(".viewElems").classList.add("hidden");
+    event.currentTarget.querySelector(".editElems").classList.remove("hidden");
+  });
+
+  task.addEventListener("focusout", (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      event.currentTarget.querySelector(".editElems").classList.add("hidden");
+      event.currentTarget
+        .querySelector(".viewElems")
+        .classList.remove("hidden");
+    }
   });
 
   // Add the task at the top of the stack
@@ -95,6 +109,7 @@ function drawNewTaskButton() {
   document.querySelector("#content").append(button);
   // Add listener
   button.addEventListener("click", (event) => {
-    renderTask();
+    const emptyTask = Task("", "", "", "");
+    renderTask(emptyTask);
   });
 }
