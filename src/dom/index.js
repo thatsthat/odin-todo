@@ -113,7 +113,7 @@ function drawNewTaskButton() {
   document.querySelector("#content").append(button);
   // Add listener
   button.addEventListener("click", (event) => {
-    const emptyTask = Task("", "", "", "");
+    const emptyTask = Task("", "", format(new Date(), "yyyy-MM-dd"), "");
     renderTask(emptyTask);
   });
 }
