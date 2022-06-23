@@ -23,7 +23,7 @@ function createUI() {
 }
 export { createUI };
 
-async function renderTask(taskPar = []) {
+function renderTask(taskPar = []) {
   // Create task container
   const task = document.createElement("div");
   task.classList.add("task");
@@ -138,4 +138,17 @@ function drawNewTaskButton() {
     const emptyTask = Task("", "", format(new Date(), "yyyy-MM-dd"), "");
     renderTask(emptyTask);
   });
+}
+
+function drawProjectMenuButton() {
+  const button = document.createElement("div");
+  <form>
+    <label for="projects">Projects:</label>
+    <select name="projects" id="projects">
+      <option value="p1">Project 1</option>
+      <option value="p2">Project 2</option>
+      <option value="p3">Project 3</option>
+      <option value="p4">Project 4</option>
+    </select>
+  </form>;
 }
