@@ -96,6 +96,10 @@ function renderTask(taskPar = []) {
         .classList.remove("hidden");
     }
   });
+  // Close the edit dialog when 'Enter' is pressed
+  task.addEventListener("keydown", (event) => {
+    if (event.keyCode === 13) document.activeElement.blur();
+  });
 
   // Add the task at the top of the stack
   document.querySelector("#taskList").prepend(task);
