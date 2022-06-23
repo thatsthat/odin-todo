@@ -23,7 +23,7 @@ function createUI() {
 }
 export { createUI };
 
-function renderTask(taskPar = []) {
+async function renderTask(taskPar = []) {
   // Create task container
   const task = document.createElement("div");
   task.classList.add("task");
@@ -75,6 +75,22 @@ function renderTask(taskPar = []) {
   // Create check button (radio input button)
   const checkButton = document.createElement("span");
   checkButton.classList.add("mdi", "mdi-radiobox-blank");
+
+  checkButton.addEventListener("click", (event) => {
+    event.target.classList.remove("mdi-radiobox-blank");
+    event.target.classList.add("mdi-radiobox-marked");
+    event.target.parentElement.remove();
+  });
+
+  checkButton.addEventListener("mouseover", (event) => {
+    event.target.classList.remove("mdi-radiobox-blank");
+    event.target.classList.add("mdi-checkbox-marked-circle-outline");
+  });
+
+  checkButton.addEventListener("mouseout", (event) => {
+    event.target.classList.remove("mdi-checkbox-marked-circle-outline");
+    event.target.classList.add("mdi-radiobox-blank");
+  });
 
   // Insert everything into task container;
   task.append(checkButton, taskData);
