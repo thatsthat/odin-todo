@@ -66,11 +66,8 @@ function renderTask(taskPar = []) {
   editElems.classList.add("editElems");
 
   // If it's a new task show edit fields, otherwise show title/date
-  if (taskPar.title.length === 0) {
-    viewElems.classList.add("hidden");
-  } else {
-    editElems.classList.add("hidden");
-  }
+  if (taskPar.title.length === 0) viewElems.classList.add("hidden");
+  else editElems.classList.add("hidden");
 
   editElems.append(editName, editDate);
   taskData.append(viewElems, editElems);
@@ -86,6 +83,7 @@ function renderTask(taskPar = []) {
   task.addEventListener("focusin", (event) => {
     event.currentTarget.querySelector(".viewElems").classList.add("hidden");
     event.currentTarget.querySelector(".editElems").classList.remove("hidden");
+    event.currentTarget.querySelector(".editElems").firstChild.focus();
   });
 
   task.addEventListener("focusout", (event) => {
@@ -100,9 +98,13 @@ function renderTask(taskPar = []) {
   task.addEventListener("keydown", (event) => {
     if (event.keyCode === 13) document.activeElement.blur();
   });
-
   // Add the task at the top of the stack
   document.querySelector("#taskList").prepend(task);
+  if (taskPar.title.length === 0)
+    document
+      .querySelector("#taskList")
+      .firstChild.querySelector(".editElems")
+      .firstChild.focus();
 }
 
 function drawNewTaskButton() {
