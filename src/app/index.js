@@ -1,5 +1,5 @@
 // Task factory function
-const Task = (title, description, dueDate, priority) => {
-  return { title, description, dueDate, priority };
+const Task = (title, dueDate, project) => {
+  return { title, dueDate, project };
 };
 export { Task };

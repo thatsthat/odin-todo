@@ -4,6 +4,8 @@ import { Task } from "../app/index.js";
 import { format, differenceInDays } from "date-fns";
 
 function createUI() {
+  // Insert project menu button
+  drawProjectMenuButton();
   // Insert new task button at the top
   drawNewTaskButton();
   // Create tasks list view
@@ -13,9 +15,9 @@ function createUI() {
 
   // Hardcode a couple of tasks to start
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
-  const task1 = Task("Task 1", "this is a test", date1, "high");
+  const task1 = Task("Task 1", date1, "Project 1");
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
-  const task2 = Task("Task 2", "this is another test", date2, "low");
+  const task2 = Task("Task 2", date2, "Project 1");
   // Array containing all tasks
   const tasks = [task1, task2];
   // Plot all the tasks in the array
@@ -23,7 +25,7 @@ function createUI() {
 }
 export { createUI };
 
-function renderTask(taskPar = []) {
+function renderTask(taskPar) {
   // Create task container
   const task = document.createElement("div");
   task.classList.add("task");
@@ -74,7 +76,7 @@ function renderTask(taskPar = []) {
 
   // Create check button (radio input button)
   const checkButton = document.createElement("span");
-  checkButton.classList.add("mdi", "mdi-radiobox-blank");
+  checkButton.classList.add("checkButton", "mdi", "mdi-radiobox-blank");
 
   checkButton.addEventListener("click", (event) => {
     event.target.classList.remove("mdi-radiobox-blank");
@@ -135,20 +137,20 @@ function drawNewTaskButton() {
   document.querySelector("#content").append(button);
   // Add listener
   button.addEventListener("click", (event) => {
-    const emptyTask = Task("", "", format(new Date(), "yyyy-MM-dd"), "");
+    const emptyTask = Task("", format(new Date(), "yyyy-MM-dd"), "");
     renderTask(emptyTask);
   });
 }
 
 function drawProjectMenuButton() {
   const button = document.createElement("div");
-  <form>
-    <label for="projects">Projects:</label>
-    <select name="projects" id="projects">
-      <option value="p1">Project 1</option>
-      <option value="p2">Project 2</option>
-      <option value="p3">Project 3</option>
-      <option value="p4">Project 4</option>
-    </select>
-  </form>;
+  button.classList.add("projectButton");
+  const icon = document.createElement("span");
+  icon.classList.add("mdi", "mdi-chevron-down");
+  const text = document.createElement("div");
+  text.textContent = "Project";
+  text.classList.add("projectButtonText");
+  button.append(text, icon);
+
+  document.querySelector("#content").append(button);
 }
