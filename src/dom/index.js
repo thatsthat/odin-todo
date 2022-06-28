@@ -4,22 +4,29 @@ import { Task } from "../app/index.js";
 import { format, differenceInDays } from "date-fns";
 
 function createUI() {
+  // Create a couple of tasks to start
+  const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
+  const task1 = Task("Task 1", date1, "Project 1");
+  const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
+  const task2 = Task("Task 2", date2, "Project 2");
+
+  // Array containing all tasks
+  const tasks = [task1, task2];
+
+  // Array containing all projects
+  const projects = ["Project 1", "Project 2"];
+
   // Insert project menu button
-  drawProjectMenuButton();
+  drawProjectMenuButton(projects);
+
   // Insert new task button at the top
   drawNewTaskButton();
+
   // Create tasks list view
   const taskList = document.createElement("div");
   taskList.id = "taskList";
   document.querySelector("#content").appendChild(taskList);
 
-  // Hardcode a couple of tasks to start
-  const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
-  const task1 = Task("Task 1", date1, "Project 1");
-  const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
-  const task2 = Task("Task 2", date2, "Project 1");
-  // Array containing all tasks
-  const tasks = [task1, task2];
   // Plot all the tasks in the array
   for (let ind in tasks) renderTask(tasks[tasks.length - ind - 1]);
 }
@@ -97,13 +104,15 @@ function renderTask(taskPar) {
   // Insert everything into task container;
   task.append(checkButton, taskData);
 
-  // Add a focus event listener to the main task div container
+  // When clicking on a task (focus in) show edit fields, hide view fields
+  // and put the cursor into the name edit field
   task.addEventListener("focusin", (event) => {
     event.currentTarget.querySelector(".viewElems").classList.add("hidden");
     event.currentTarget.querySelector(".editElems").classList.remove("hidden");
     event.currentTarget.querySelector(".editElems").firstChild.focus();
   });
 
+  // When a task is 'expanded' close it if a click is detected outside
   task.addEventListener("focusout", (event) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
       event.currentTarget.querySelector(".editElems").classList.add("hidden");
@@ -142,7 +151,8 @@ function drawNewTaskButton() {
   });
 }
 
-function drawProjectMenuButton() {
+function drawProjectMenuButton(projList) {
+  // Draw the button to opens dropdown menu
   const button = document.createElement("div");
   button.classList.add("projectButton");
   const icon = document.createElement("span");
@@ -152,5 +162,29 @@ function drawProjectMenuButton() {
   text.classList.add("projectButtonText");
   button.append(text, icon);
 
-  document.querySelector("#content").append(button);
+  // Click on the button to show/hide dropdown menu
+  button.addEventListener("click", (event) => {
+    document.querySelector(".projectsDropdown").classList.toggle("show");
+  });
+
+  // Draw the list of projects
+  const projects = document.createElement("div");
+  projects.classList.add("projectsDropdown");
+  for (let i in projList) {
+    const project = document.createElement("div");
+    project.textContent = projList[i];
+    projects.append(project);
+  }
+
+  // When dropdown is open, close it if a click is detected outside
+  window.onclick = function (e) {
+    const button = document.querySelector(".projectButton");
+    if (!(e.target.matches(".projectButton") || button.contains(e.target))) {
+      var myDropdown = document.querySelector(".projectsDropdown");
+      if (myDropdown.classList.contains("show")) {
+        myDropdown.classList.remove("show");
+      }
+    }
+  };
+  document.querySelector("#content").append(button, projects);
 }
