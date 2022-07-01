@@ -3,13 +3,17 @@ import "@mdi/font/css/materialdesignicons.css";
 import { taskList } from "../app/index.js";
 import { format, differenceInDays } from "date-fns";
 
-function createUI() {
+function renderUI() {
   // Create a couple of tasks to start
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
   taskList.addTask("Task 1", date1, "Project 1");
 
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
   taskList.addTask("Task 2", date2, "Project 2");
+
+  // Create two projects
+  taskList.addProject("Project 1");
+  taskList.addProject("Project 2");
 
   // Insert project menu button
   drawProjectMenuButton(taskList.projects);
@@ -22,11 +26,19 @@ function createUI() {
   taskListDiv.id = "taskList";
   document.querySelector("#content").appendChild(taskListDiv);
 
+  // Delete all existing tasks on the UI if present
+  existingTasks = document.querySelectorAll(".task");
+  if (existingTasks) {
+    existingTasks.forEach((task) => {
+      task.remove();
+    });
+  }
+
   // Plot all the tasks in the array
   for (let ind in taskList.tasks)
     renderTask(taskList.tasks[taskList.tasks.length - ind - 1]);
 }
-export { createUI };
+export { renderUI };
 
 function renderTask(taskPar) {
   // Create task container
