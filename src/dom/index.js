@@ -26,19 +26,21 @@ function renderUI() {
   taskListDiv.id = "taskList";
   document.querySelector("#content").appendChild(taskListDiv);
 
+  renderAllTasks();
+}
+export { renderUI };
+
+function renderAllTasks() {
   // Delete all existing tasks on the UI if present
-  existingTasks = document.querySelectorAll(".task");
+  const existingTasks = document.querySelectorAll(".task");
   if (existingTasks) {
     existingTasks.forEach((task) => {
       task.remove();
     });
   }
-
   // Plot all the tasks in the array
-  for (let ind in taskList.tasks)
-    renderTask(taskList.tasks[taskList.tasks.length - ind - 1]);
+  for (let ind in taskList.tasks) renderTask(taskList.tasks[ind]);
 }
-export { renderUI };
 
 function renderTask(taskPar) {
   // Create task container
@@ -144,7 +146,7 @@ function renderTask(taskPar) {
 
 function drawNewTaskButton() {
   const button = document.createElement("div");
-  button.classList.add("newTaskButton", "task");
+  button.classList.add("newTaskButton");
   const icon = document.createElement("span");
   icon.classList.add("mdi", "mdi-checkbox-marked-circle-plus-outline");
   const text = document.createElement("div");
@@ -154,8 +156,9 @@ function drawNewTaskButton() {
   document.querySelector("#content").append(button);
   // Add listener
   button.addEventListener("click", (event) => {
-    const emptyTask = Task("", format(new Date(), "yyyy-MM-dd"), "");
-    renderTask(emptyTask);
+    const date1 = format(new Date(), "yyyy-MM-dd");
+    taskList.addTask("", date1, "Project 1");
+    renderAllTasks();
   });
 }
 
