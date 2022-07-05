@@ -30,7 +30,7 @@ function renderUI() {
 }
 export { renderUI };
 
-function renderAllTasks() {
+function renderAllTasks(proj = "") {
   // Delete all existing tasks on the UI if present
   const existingTasks = document.querySelectorAll(".task");
   if (existingTasks) {

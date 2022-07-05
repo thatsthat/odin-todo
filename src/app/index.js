@@ -7,6 +7,8 @@ const taskList = (() => {
   // Initialize tasks and projects array
   const tasks = [];
   const projects = [];
+  // Default active project is the first one on projects array
+  const activeProjectInd = 0;
 
   const addTask = (title, dueDate, project) => {
     const task = Task(title, dueDate, project);
