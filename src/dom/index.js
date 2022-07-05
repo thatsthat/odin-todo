@@ -5,11 +5,11 @@ import { format, differenceInDays } from "date-fns";
 
 function renderUI() {
   // Create a couple of tasks to start
-  const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
-  taskList.addTask("Task 1", date1, "Project 1");
-
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
   taskList.addTask("Task 2", date2, "Project 2");
+
+  const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
+  taskList.addTask("Task 1", date1, "Project 1");
 
   // Create two projects
   taskList.addProject("Project 1");
@@ -98,7 +98,10 @@ function renderTask(taskPar) {
   checkButton.addEventListener("click", (event) => {
     event.target.classList.remove("mdi-radiobox-blank");
     event.target.classList.add("mdi-radiobox-marked");
-    event.target.parentElement.remove();
+    const task = event.target.parentElement;
+    const ind = [...task.parentNode.children].indexOf(task);
+    taskList.rmTask(ind);
+    renderAllTasks();
   });
 
   checkButton.addEventListener("mouseover", (event) => {
@@ -135,8 +138,9 @@ function renderTask(taskPar) {
   task.addEventListener("keydown", (event) => {
     if (event.keyCode === 13) document.activeElement.blur();
   });
+
   // Add the task at the top of the stack
-  document.querySelector("#taskList").prepend(task);
+  document.querySelector("#taskList").append(task);
   if (taskPar.title.length === 0)
     document
       .querySelector("#taskList")

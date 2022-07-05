@@ -10,7 +10,12 @@ const taskList = (() => {
 
   const addTask = (title, dueDate, project) => {
     const task = Task(title, dueDate, project);
-    tasks.push(task);
+    // Insert the task at the beginning of the array
+    tasks.unshift(task);
+  };
+
+  const rmTask = (taskInd) => {
+    tasks.splice(taskInd, 1);
   };
 
   const addProject = (projName) => {
@@ -19,6 +24,7 @@ const taskList = (() => {
 
   return {
     addTask,
+    rmTask,
     addProject,
     tasks,
     projects,
