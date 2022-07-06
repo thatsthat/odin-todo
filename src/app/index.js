@@ -24,10 +24,21 @@ const taskList = (() => {
     projects.push(projName);
   };
 
+  const getAllTasks = () => {
+    return tasks;
+  };
+
+  const getProjTasks = (projectInd) => {
+    // Filter tasks by project
+    return tasks.filter((task) => task.project == projects[projectInd]);
+  };
+
   return {
     addTask,
     rmTask,
     addProject,
+    getAllTasks,
+    getProjTasks,
     tasks,
     projects,
   };

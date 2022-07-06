@@ -4,16 +4,16 @@ import { taskList } from "../app/index.js";
 import { format, differenceInDays } from "date-fns";
 
 function renderUI() {
+  // Create two projects
+  taskList.addProject("Project 1");
+  taskList.addProject("Project 2");
+
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
   taskList.addTask("Task 2", date2, "Project 2");
 
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
   taskList.addTask("Task 1", date1, "Project 1");
-
-  // Create two projects
-  taskList.addProject("Project 1");
-  taskList.addProject("Project 2");
 
   // Insert project menu button
   drawProjectMenuButton(taskList.projects);
@@ -26,11 +26,11 @@ function renderUI() {
   taskListDiv.id = "taskList";
   document.querySelector("#content").appendChild(taskListDiv);
 
-  renderAllTasks();
+  renderTasks(1);
 }
 export { renderUI };
 
-function renderAllTasks(proj = "") {
+function renderTasks(projInd = -1) {
   // Delete all existing tasks on the UI if present
   const existingTasks = document.querySelectorAll(".task");
   if (existingTasks) {
@@ -38,8 +38,14 @@ function renderAllTasks(proj = "") {
       task.remove();
     });
   }
-  // Plot all the tasks in the array
-  for (let ind in taskList.tasks) renderTask(taskList.tasks[ind]);
+  // If no project specified, plot all the tasks in the array
+  if (projInd < 0) {
+    const tasks = taskList.getAllTasks();
+    for (let ind in tasks) renderTask(tasks[ind]);
+  } else {
+    const projTasks = taskList.getProjTasks(projInd);
+    for (let ind in projTasks) renderTask(projTasks[ind]);
+  }
 }
 
 function renderTask(taskPar) {
@@ -101,7 +107,7 @@ function renderTask(taskPar) {
     const task = event.target.parentElement;
     const ind = [...task.parentNode.children].indexOf(task);
     taskList.rmTask(ind);
-    renderAllTasks();
+    renderTasks();
   });
 
   checkButton.addEventListener("mouseover", (event) => {
@@ -162,7 +168,7 @@ function drawNewTaskButton() {
   button.addEventListener("click", (event) => {
     const date1 = format(new Date(), "yyyy-MM-dd");
     taskList.addTask("", date1, "Project 1");
-    renderAllTasks();
+    renderTasks();
   });
 }
 
