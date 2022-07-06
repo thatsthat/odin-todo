@@ -28,9 +28,9 @@ const taskList = (() => {
     return tasks;
   };
 
-  const getProjTasks = (projectInd) => {
+  const getProjTasks = () => {
     // Filter tasks by project
-    return tasks.filter((task) => task.project == projects[projectInd]);
+    return tasks.filter((task) => task.project == projects[activeProjectInd]);
   };
 
   return {
@@ -41,6 +41,7 @@ const taskList = (() => {
     getProjTasks,
     tasks,
     projects,
+    activeProjectInd,
   };
 })();
 

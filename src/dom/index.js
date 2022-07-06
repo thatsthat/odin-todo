@@ -7,6 +7,7 @@ function renderUI() {
   // Create two projects
   taskList.addProject("Project 1");
   taskList.addProject("Project 2");
+  taskList.activeProjectInd = 0;
 
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
@@ -26,11 +27,11 @@ function renderUI() {
   taskListDiv.id = "taskList";
   document.querySelector("#content").appendChild(taskListDiv);
 
-  renderTasks(1);
+  renderTasks(taskList.activeProjectInd);
 }
 export { renderUI };
 
-function renderTasks(projInd = -1) {
+function renderTasks() {
   // Delete all existing tasks on the UI if present
   const existingTasks = document.querySelectorAll(".task");
   if (existingTasks) {
@@ -38,14 +39,8 @@ function renderTasks(projInd = -1) {
       task.remove();
     });
   }
-  // If no project specified, plot all the tasks in the array
-  if (projInd < 0) {
-    const tasks = taskList.getAllTasks();
-    for (let ind in tasks) renderTask(tasks[ind]);
-  } else {
-    const projTasks = taskList.getProjTasks(projInd);
-    for (let ind in projTasks) renderTask(projTasks[ind]);
-  }
+  const tasks = taskList.getProjTasks();
+  for (let ind in tasks) renderTask(tasks[ind]);
 }
 
 function renderTask(taskPar) {
