@@ -17,7 +17,7 @@ function renderUI() {
   taskList.addTask("Task 1", date1, "Project 1");
 
   // Insert project menu button
-  drawProjectMenuButton(taskList.projects);
+  drawProjectMenuButton();
 
   // Insert new task button at the top
   drawNewTaskButton();
@@ -167,7 +167,7 @@ function drawNewTaskButton() {
   });
 }
 
-function drawProjectMenuButton(projList) {
+function drawProjectMenuButton() {
   // Draw the button to opens dropdown menu
   const button = document.createElement("div");
   button.classList.add("projectButton");
@@ -186,9 +186,20 @@ function drawProjectMenuButton(projList) {
   // Draw the list of projects
   const projects = document.createElement("div");
   projects.classList.add("projectsDropdown");
-  for (let i in projList) {
+  for (let i in taskList.projects) {
     const project = document.createElement("div");
-    project.textContent = projList[i];
+    const projText = document.createElement("span");
+    project.classList.add("projectMenuItem");
+    // Mark active project with check sign
+    const checkMark = document.createElement("span");
+    if (i == taskList.activeProjectInd) {
+      checkMark.classList.add("mdi", "mdi-check");
+      checkMark.style.paddingRight = "6px";
+    } else {
+      checkMark.style.paddingRight = "30px";
+    }
+    projText.textContent = taskList.projects[i];
+    project.append(checkMark, projText);
     projects.append(project);
   }
 

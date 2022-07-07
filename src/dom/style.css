@@ -7,6 +7,7 @@
 
 * {
   font-family: MyFont;
+  user-select: none;
 }
 
 #taskList {
@@ -87,6 +88,10 @@ input[type="text"] {
   margin: 0 0.2rem 0.2rem 0.2rem;
   gap: 0.5rem;
   border-radius: 7px;
+}
+.projectMenuItem {
+  display: flex;
+  align-items: center;
 }
 .show {
   display: flex;
