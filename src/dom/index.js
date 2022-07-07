@@ -100,6 +100,7 @@ function renderTask(taskPar) {
     event.target.classList.remove("mdi-radiobox-blank");
     event.target.classList.add("mdi-radiobox-marked");
     const task = event.target.parentElement;
+    // Determine the task position within the list (used as task ID)
     const ind = [...task.parentNode.children].indexOf(task);
     taskList.rmTask(ind);
     renderTasks();
@@ -197,11 +198,25 @@ function drawProjectMenuButton() {
       checkMark.style.paddingRight = "6px";
     } else {
       checkMark.style.paddingRight = "30px";
+      checkMark.style.paddingBlockStart = "24px";
     }
     projText.textContent = taskList.projects[i];
     project.append(checkMark, projText);
+    // Add the project item to the menu
     projects.append(project);
   }
+  // Add click listeners to every project menu item
+  const projs = [...projects.children];
+  projs.forEach((project) => {
+    project.addEventListener("click", (event) => {
+      const proj = event.currentTarget;
+      const ind = [...proj.parentNode.children].indexOf(proj);
+      // Change the active project state variable to the clicked project
+      taskList.activeProjectInd = ind;
+      // Render the tasks corresponding to the selected project
+      renderTasks();
+    });
+  });
 
   // When dropdown is open, close it if a click is detected outside
   window.onclick = function (e) {

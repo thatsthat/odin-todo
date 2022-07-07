@@ -93,6 +93,12 @@ input[type="text"] {
   display: flex;
   align-items: center;
 }
+
+.projectMenuItem:hover {
+  background-color: #f3f3f3;
+  cursor: pointer;
+}
+
 .show {
   display: flex;
 }
