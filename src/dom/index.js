@@ -7,7 +7,7 @@ function renderUI() {
   // Create two projects
   taskList.addProject("Project 1");
   taskList.addProject("Project 2");
-  taskList.activeProjectInd = 0;
+  taskList.setActiveProjInd(0);
 
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
@@ -27,7 +27,7 @@ function renderUI() {
   taskListDiv.id = "taskList";
   document.querySelector("#content").appendChild(taskListDiv);
 
-  renderTasks(taskList.activeProjectInd);
+  renderTasks();
 }
 export { renderUI };
 
@@ -211,8 +211,22 @@ function drawProjectMenuButton() {
     project.addEventListener("click", (event) => {
       const proj = event.currentTarget;
       const ind = [...proj.parentNode.children].indexOf(proj);
+
+      // Remove the tick from previous active project
+      const prevActProj = document.querySelector(".mdi-check");
+      const prevActCheck = prevActProj.parentNode.firstChild;
+      prevActCheck.style.paddingRight = "30px";
+      prevActCheck.style.paddingBlockStart = "24px";
+      prevActCheck.classList.remove("mdi", "mdi-check");
+
+      // And add the tick current active project
+      const currActCheck = proj.firstChild;
+      currActCheck.classList.add("mdi", "mdi-check");
+      currActCheck.style.paddingRight = "6px";
+      currActCheck.style.paddingBlockStart = "0px";
+
       // Change the active project state variable to the clicked project
-      taskList.activeProjectInd = ind;
+      taskList.setActiveProjInd(ind);
       // Render the tasks corresponding to the selected project
       renderTasks();
     });
