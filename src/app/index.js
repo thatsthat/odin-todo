@@ -14,7 +14,7 @@ const taskList = (() => {
     activeProjectInd = ind;
   };
 
-  const addTask = (title, dueDate, project) => {
+  const addTask = (title, dueDate, project = projects[activeProjectInd]) => {
     const task = Task(title, dueDate, project);
     // Insert the task at the beginning of the array
     tasks.unshift(task);

@@ -163,7 +163,7 @@ function drawNewTaskButton() {
   // Add listener
   button.addEventListener("click", (event) => {
     const date1 = format(new Date(), "yyyy-MM-dd");
-    taskList.addTask("", date1, "Project 1");
+    taskList.addTask("", date1);
     renderTasks();
   });
 }
