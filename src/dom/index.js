@@ -242,5 +242,20 @@ function drawProjectMenuButton() {
       }
     }
   };
+  // Create New Project button
+  const newProjButton = document.createElement("div");
+  newProjButton.classList.add("newProjButton");
+  const icon2 = document.createElement("span");
+  icon2.classList.add("mdi", "mdi-text-box-plus-outline");
+  const text2 = document.createElement("div");
+  text2.textContent = "Create New Project";
+  text2.classList.add("newProjButtonText");
+  newProjButton.append(icon2, text2);
+
+  // Click on the button to show/hide dropdown menu
+  newProjButton.addEventListener("click", (event) => {
+    //document.querySelector(".projectsDropdown").classList.toggle("show");
+  });
+  projects.append(newProjButton);
   document.querySelector("#content").append(button, projects);
 }
