@@ -7,7 +7,6 @@ function renderUI() {
   // Create two projects
   taskList.addProject("Project 1");
   taskList.addProject("Project 2");
-  taskList.setActiveProjInd(0);
 
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
@@ -247,6 +246,7 @@ function drawProjectMenuButton() {
   newProjButton.classList.add("newProjButton");
   const icon2 = document.createElement("span");
   icon2.classList.add("mdi", "mdi-text-box-plus-outline");
+  icon2.style.paddingRight = "6px";
   const text2 = document.createElement("div");
   text2.textContent = "Create New Project";
   text2.classList.add("newProjButtonText");
@@ -258,4 +258,21 @@ function drawProjectMenuButton() {
   });
   projects.append(newProjButton);
   document.querySelector("#content").append(button, projects);
+}
+
+function drawNewProjectModal() {
+  const modal = document.createElement("div");
+  modal.classList.add("newProjModal");
+  const title = document.createElement("div");
+  title.textContent = "Create new project";
+
+  // Create input text box to save project title
+  const projName = document.createElement("input");
+  projName.type = "text";
+  projName.placeholder = "Enter name";
+
+  // Add listener to store value into task object
+  projName.addEventListener("change", (event) => {
+    const projTitle = event.target.value;
+  });
 }

@@ -8,7 +8,7 @@
 * {
   font-family: MyFont;
   user-select: none;
-  /*border: 1px solid red;*/
+  /* border: 1px solid red; */
 }
 
 #taskList {
@@ -58,14 +58,13 @@
   margin: 0.2rem; */
   align-items: center;
   border-top: 1px solid #f1f3f4;
-  padding-top: 1rem;
+  padding-top: 2px;
 }
 .newProjButton:hover {
   background-color: #f3f3f3;
   cursor: pointer;
 }
 .newProjButtonText {
-  margin-left: 2vw;
   margin-right: 10vw;
 }
 .mdi {
