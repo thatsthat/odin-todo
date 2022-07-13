@@ -21,6 +21,9 @@ function renderUI() {
   // Insert new task button at the top
   drawNewTaskButton();
 
+  // Insert new project modal and dialog (hidden by default)
+  drawNewProjectModal();
+
   // Create tasks list view
   const taskListDiv = document.createElement("div");
   taskListDiv.id = "taskList";
@@ -252,27 +255,53 @@ function drawProjectMenuButton() {
   text2.classList.add("newProjButtonText");
   newProjButton.append(icon2, text2);
 
-  // Click on the button to show/hide dropdown menu
+  // Click on the button to show/hide new project modal
   newProjButton.addEventListener("click", (event) => {
-    //document.querySelector(".projectsDropdown").classList.toggle("show");
+    document.querySelector("#newProjModal").style.display = "flex";
   });
   projects.append(newProjButton);
   document.querySelector("#content").append(button, projects);
 }
 
 function drawNewProjectModal() {
+  // Create the modal (grey background)
   const modal = document.createElement("div");
-  modal.classList.add("newProjModal");
+  modal.id = "newProjModal";
+
+  const modalDialog = document.createElement("div");
+  modalDialog.id = "newProjModalDialog";
   const title = document.createElement("div");
   title.textContent = "Create new project";
 
   // Create input text box to save project title
-  const projName = document.createElement("input");
-  projName.type = "text";
-  projName.placeholder = "Enter name";
+  const projNameInput = document.createElement("input");
+  projNameInput.type = "text";
+  projNameInput.placeholder = "Enter name";
+
+  // Create the buttons below
+  const buttons = document.createElement("div");
+  buttons.id = "newProjModalButtons";
+  const cancelButton = document.createElement("div");
+  cancelButton.classList.add("button");
+  cancelButton.textContent = "Cancel";
+  const doneButton = document.createElement("div");
+  doneButton.textContent = "Done";
+  doneButton.classList.add("button");
+  buttons.append(cancelButton, doneButton);
+
+  modalDialog.append(title, projNameInput, buttons);
+  modal.append(modalDialog);
+  document.querySelector("#content").append(modal);
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 
   // Add listener to store value into task object
-  projName.addEventListener("change", (event) => {
-    const projTitle = event.target.value;
+  projNameInput.addEventListener("change", (event) => {
+    //const projTitle = event.target.value;
   });
 }
