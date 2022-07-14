@@ -171,7 +171,7 @@ function drawNewTaskButton() {
 }
 
 function drawProjectMenuButton() {
-  // Draw the button to opens dropdown menu
+  // Draw the button to open dropdown menu
   const button = document.createElement("div");
   button.classList.add("projectButton");
   const icon = document.createElement("span");
@@ -235,7 +235,7 @@ function drawProjectMenuButton() {
   });
 
   // When dropdown is open, close it if a click is detected outside
-  window.onclick = function (e) {
+  window.addEventListener("click", function (e) {
     const button = document.querySelector(".projectButton");
     if (!(e.target.matches(".projectButton") || button.contains(e.target))) {
       var myDropdown = document.querySelector(".projectsDropdown");
@@ -243,7 +243,7 @@ function drawProjectMenuButton() {
         myDropdown.classList.remove("show");
       }
     }
-  };
+  });
   // Create New Project button
   const newProjButton = document.createElement("div");
   newProjButton.classList.add("newProjButton");
@@ -258,6 +258,7 @@ function drawProjectMenuButton() {
   // Click on the button to show/hide new project modal
   newProjButton.addEventListener("click", (event) => {
     document.querySelector("#newProjModal").style.display = "flex";
+    document.querySelector("#projNameInput").focus();
   });
   projects.append(newProjButton);
   document.querySelector("#content").append(button, projects);
@@ -275,6 +276,7 @@ function drawNewProjectModal() {
 
   // Create input text box to save project title
   const projNameInput = document.createElement("input");
+  projNameInput.id = "projNameInput";
   projNameInput.type = "text";
   projNameInput.placeholder = "Enter name";
 
@@ -286,6 +288,7 @@ function drawNewProjectModal() {
   cancelButton.textContent = "Cancel";
   const doneButton = document.createElement("div");
   doneButton.textContent = "Done";
+  doneButton.style.color = "blue";
   doneButton.classList.add("button");
   buttons.append(cancelButton, doneButton);
 
@@ -294,14 +297,35 @@ function drawNewProjectModal() {
   document.querySelector("#content").append(modal);
 
   // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
+  window.addEventListener("click", function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
-  };
+  });
+
+  // handle buttons on the modal dialog
+  cancelButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 
   // Add listener to store value into task object
-  projNameInput.addEventListener("change", (event) => {
-    //const projTitle = event.target.value;
+  doneButton.addEventListener("click", (event) => {
+    const projInput = document.querySelector("#projNameInput");
+    // Store the new project into taskList
+    taskList.addProject(projInput.value);
+    // Close the modal
+    modal.style.display = "none";
+    // Redraw the projects dropdown menu
+    document.querySelector(".projectButton").remove();
+    document.querySelector(".projectsDropdown").remove();
+    drawProjectMenuButton();
+    document
+      .querySelector("#content")
+      .prepend(
+        document.querySelector(".projectButton"),
+        document.querySelector(".projectsDropdown")
+      );
+    const newProj = document.querySelector('[value="iep"]');
+    console.log(newProj);
   });
 }
