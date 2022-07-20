@@ -8,10 +8,14 @@ const taskList = (() => {
   const tasks = [];
   const projects = [];
   // Default active project is the first one on projects array
-  let activeProjectInd = 0;
+  let activeProjectInd = [];
 
-  const setActiveProjInd = (ind) => {
+  const setActProjInd = (ind) => {
     activeProjectInd = ind;
+  };
+
+  const getActProjInd = (ind) => {
+    return activeProjectInd;
   };
 
   const addTask = (title, dueDate, project = projects[activeProjectInd]) => {
@@ -26,6 +30,8 @@ const taskList = (() => {
 
   const addProject = (projName) => {
     projects.push(projName);
+    // Set the new project as the active project
+    setActProjInd(activeProjectInd + 1);
   };
 
   const getAllTasks = () => {
@@ -43,7 +49,8 @@ const taskList = (() => {
     addProject,
     getAllTasks,
     getProjTasks,
-    setActiveProjInd,
+    setActProjInd,
+    getActProjInd,
     tasks,
     projects,
     activeProjectInd,

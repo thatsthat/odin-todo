@@ -7,6 +7,7 @@ function renderUI() {
   // Create two projects
   taskList.addProject("Project 1");
   taskList.addProject("Project 2");
+  taskList.setActProjInd(0);
 
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
@@ -14,6 +15,7 @@ function renderUI() {
 
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
   taskList.addTask("Task 1", date1, "Project 1");
+  console.log(taskList.getActProjInd());
 
   // Insert project menu button
   drawProjectMenuButton();
@@ -195,7 +197,8 @@ function drawProjectMenuButton() {
     project.classList.add("projectMenuItem");
     // Mark active project with check sign
     const checkMark = document.createElement("span");
-    if (i == taskList.activeProjectInd) {
+    if (i == taskList.getActProjInd()) {
+      //console.log(taskList.projects[taskList.activeProjectInd]);
       checkMark.classList.add("mdi", "mdi-check");
       checkMark.style.paddingRight = "6px";
     } else {
@@ -228,7 +231,7 @@ function drawProjectMenuButton() {
       currActCheck.style.paddingBlockStart = "0px";
 
       // Change the active project state variable to the clicked project
-      taskList.setActiveProjInd(ind);
+      taskList.setActProjInd(ind);
       // Render the tasks corresponding to the selected project
       renderTasks();
     });
@@ -313,11 +316,14 @@ function drawNewProjectModal() {
     const projInput = document.querySelector("#projNameInput");
     // Store the new project into taskList
     taskList.addProject(projInput.value);
+    // Set the new project as active
+    taskList.setActProjInd(taskList.projects.length - 1);
     // Close the modal
     modal.style.display = "none";
     // Redraw the projects dropdown menu
     document.querySelector(".projectButton").remove();
     document.querySelector(".projectsDropdown").remove();
+    //console.log(`dom: ${taskList.projects[taskList.activeProjectInd]}`);
     drawProjectMenuButton();
     document
       .querySelector("#content")
@@ -325,7 +331,5 @@ function drawNewProjectModal() {
         document.querySelector(".projectButton"),
         document.querySelector(".projectsDropdown")
       );
-    const newProj = document.querySelector('[value="iep"]');
-    console.log(newProj);
   });
 }
