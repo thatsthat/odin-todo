@@ -11,10 +11,10 @@ function renderUI() {
 
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
-  taskList.addTask("Task 2", date2, "Project 2");
+  taskList.addTask("Task 2", "hola", date2, "Project 2");
 
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
-  taskList.addTask("Task 1", date1, "Project 1");
+  taskList.addTask("Task 1", "pola", date1, "Project 1");
 
   // Insert project menu button
   drawProjectMenuButton();
@@ -55,11 +55,13 @@ function renderTask(taskPar) {
   const taskData = document.createElement("div");
   taskData.classList.add("taskData");
   const name = document.createElement("div");
+  const details = document.createElement("div");
   const date = document.createElement("div");
   name.textContent = taskPar.title;
+  details.textContent = taskPar.details;
   date.textContent = format(new Date(taskPar.dueDate), "dd-MM-yyyy");
 
-  // Create form to create/edit title and date
+  // Create form to create/edit title details and date
   const editName = document.createElement("input");
   editName.type = "text";
   editName.placeholder = "Title";
@@ -71,9 +73,30 @@ function renderTask(taskPar) {
     name.textContent = taskPar.title;
   });
 
-  const editDate = document.createElement("input");
-  editDate.type = "date";
-  editDate.value = taskPar.dueDate;
+  const editDetails = document.createElement("div");
+  editDetails.classList.add = "editDetails";
+  const editDetailsInput = document.createElement("input");
+  editDetailsInput.type = "text";
+  editDetailsInput.placeholder = "Details";
+  editDetailsInput.value = taskPar.details;
+  const editDetailsIcon = document.createElement("span");
+  editDetailsIcon.classList.add("smallIcon", "mdi", "mdi-text");
+  editDetails.append(editDetailsIcon, editDetailsInput);
+
+  // Add listener to store value into task object
+  editName.addEventListener("change", (event) => {
+    taskPar.details = event.target.value;
+    details.textContent = taskPar.details;
+  });
+
+  const editDate = document.createElement("div");
+  editDate.classList.add = "editDate";
+  const editDateInput = document.createElement("input");
+  editDateInput.type = "date";
+  editDateInput.value = taskPar.dueDate;
+  const editDateIcon = document.createElement("span");
+  editDateIcon.classList.add("smallIcon", "mdi", "mdi-calendar");
+  editDate.append(editDateIcon, editDateInput);
 
   // Add listener to store value into task object
   editDate.addEventListener("change", (event) => {
@@ -92,7 +115,7 @@ function renderTask(taskPar) {
   if (taskPar.title.length === 0) viewElems.classList.add("hidden");
   else editElems.classList.add("hidden");
 
-  editElems.append(editName, editDate);
+  editElems.append(editName, editDetails, editDate);
   taskData.append(viewElems, editElems);
 
   // Create check button (radio input button)
@@ -166,7 +189,7 @@ function drawNewTaskButton() {
   // Add listener
   button.addEventListener("click", (event) => {
     const date1 = format(new Date(), "yyyy-MM-dd");
-    taskList.addTask("", date1);
+    taskList.addTask("", "", date1);
     renderTasks();
   });
 }
@@ -259,6 +282,8 @@ function drawProjectMenuButton() {
   // Click on the button to show/hide new project modal
   newProjButton.addEventListener("click", (event) => {
     document.querySelector("#newProjModal").style.display = "flex";
+    // Clear previous value of the input text box if present
+    document.querySelector("#projNameInput").value = "";
     document.querySelector("#projNameInput").focus();
   });
   projects.append(newProjButton);
