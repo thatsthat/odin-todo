@@ -15,7 +15,6 @@ function renderUI() {
 
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
   taskList.addTask("Task 1", date1, "Project 1");
-  console.log(taskList.getActProjInd());
 
   // Insert project menu button
   drawProjectMenuButton();
@@ -198,7 +197,6 @@ function drawProjectMenuButton() {
     // Mark active project with check sign
     const checkMark = document.createElement("span");
     if (i == taskList.getActProjInd()) {
-      //console.log(taskList.projects[taskList.activeProjectInd]);
       checkMark.classList.add("mdi", "mdi-check");
       checkMark.style.paddingRight = "6px";
     } else {
@@ -323,7 +321,6 @@ function drawNewProjectModal() {
     // Redraw the projects dropdown menu
     document.querySelector(".projectButton").remove();
     document.querySelector(".projectsDropdown").remove();
-    //console.log(`dom: ${taskList.projects[taskList.activeProjectInd]}`);
     drawProjectMenuButton();
     document
       .querySelector("#content")
