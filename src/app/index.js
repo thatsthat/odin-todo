@@ -1,6 +1,6 @@
 // Task factory function
-const Task = (title, details, dueDate, project) => {
-  return { title, details, dueDate, project };
+const Task = (title, details, dueDate, priority, project) => {
+  return { title, details, dueDate, priority, project };
 };
 
 const taskList = (() => {
@@ -22,9 +22,10 @@ const taskList = (() => {
     title,
     details,
     dueDate,
+    priority = 1,
     project = projects[activeProjectInd]
   ) => {
-    const task = Task(title, details, dueDate, project);
+    const task = Task(title, details, dueDate, priority, project);
     // Insert the task at the beginning of the array
     tasks.unshift(task);
   };

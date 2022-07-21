@@ -11,10 +11,10 @@ function renderUI() {
 
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
-  taskList.addTask("Task 2", "hola", date2, "Project 2");
+  taskList.addTask("Task 2", "hola", date2, 1, "Project 2");
 
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
-  taskList.addTask("Task 1", "pola", date1, "Project 1");
+  taskList.addTask("Task 1", "pola", date1, 1, "Project 1");
 
   // Insert project menu button
   drawProjectMenuButton();
@@ -104,6 +104,26 @@ function renderTask(taskPar) {
     date.textContent = format(new Date(taskPar.dueDate), "dd-MM-yyyy");
   });
 
+  const editPrio = document.createElement("div");
+  editPrio.classList.add = "editPrio";
+  const editPrioSelect = document.createElement("select");
+  const opt1 = document.createElement("option");
+  opt1.value = "0";
+  opt1.text = "Low Priority";
+  editPrioSelect.add(opt1);
+  const opt2 = document.createElement("option");
+  opt2.value = "1";
+  opt2.text = "Normal Priority";
+  editPrioSelect.add(opt2);
+  const opt3 = document.createElement("option");
+  opt3.value = "2";
+  opt3.text = "High Priority";
+  editPrioSelect.add(opt3);
+  editPrioSelect.selectedIndex = taskPar.priority;
+  const editPrioIcon = document.createElement("span");
+  editPrioIcon.classList.add("smallIcon", "mdi", "mdi-priority-high");
+  editPrio.append(editPrioIcon, editPrioSelect);
+
   const viewElems = document.createElement("div");
   viewElems.classList.add("viewElems");
   viewElems.append(name, date);
@@ -115,7 +135,7 @@ function renderTask(taskPar) {
   if (taskPar.title.length === 0) viewElems.classList.add("hidden");
   else editElems.classList.add("hidden");
 
-  editElems.append(editName, editDetails, editDate);
+  editElems.append(editName, editDetails, editDate, editPrio);
   taskData.append(viewElems, editElems);
 
   // Create check button (radio input button)
@@ -189,7 +209,7 @@ function drawNewTaskButton() {
   // Add listener
   button.addEventListener("click", (event) => {
     const date1 = format(new Date(), "yyyy-MM-dd");
-    taskList.addTask("", "", date1);
+    taskList.addTask("", "", date1, "", "");
     renderTasks();
   });
 }
