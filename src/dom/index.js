@@ -49,6 +49,16 @@ function renderTasks() {
 function renderTask(taskPar) {
   // Create task container
   const task = document.createElement("div");
+  switch (parseInt(taskPar.priority)) {
+    case 0:
+      task.style.backgroundColor = "#b8dcbd";
+      break;
+    case 1:
+      break;
+    case 2:
+      task.style.backgroundColor = "#ff9a84";
+  }
+
   task.classList.add("task");
   task.setAttribute("tabindex", "0"); // Make it focusable
   // Create a sub container with task name and due date
@@ -123,6 +133,27 @@ function renderTask(taskPar) {
   const editPrioIcon = document.createElement("span");
   editPrioIcon.classList.add("smallIcon", "mdi", "mdi-priority-high");
   editPrio.append(editPrioIcon, editPrioSelect);
+
+  // Add event listener to select element to update the color of the task
+  // Add listener to store value into task object
+  editPrioSelect.addEventListener("change", (event) => {
+    const task =
+      event.target.parentElement.parentElement.parentElement.parentElement;
+    // Determine the task position within the list (used as task ID)
+    const ind = [...task.parentNode.children].indexOf(task);
+    taskList.rmTask(ind);
+
+    switch (parseInt(event.target.value)) {
+      case 0:
+        task.style.backgroundColor = "#b8dcbd";
+        break;
+      case 1:
+        task.style.backgroundColor = "#FFFFFF";
+        break;
+      case 2:
+        task.style.backgroundColor = "#ff9a84";
+    }
+  });
 
   const viewElems = document.createElement("div");
   viewElems.classList.add("viewElems");
@@ -209,7 +240,7 @@ function drawNewTaskButton() {
   // Add listener
   button.addEventListener("click", (event) => {
     const date1 = format(new Date(), "yyyy-MM-dd");
-    taskList.addTask("", "", date1, "", "");
+    taskList.addTask("", "", date1);
     renderTasks();
   });
 }
