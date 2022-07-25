@@ -11,10 +11,10 @@ function renderUI() {
 
   // Create a couple of tasks to start
   const date2 = format(new Date(2022, 6, 25), "yyyy-MM-dd");
-  taskList.addTask("Task 2", "hola", date2, 1, "Project 2");
+  taskList.addTask("Task 2", "hola", date2, 1, 1);
 
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
-  taskList.addTask("Task 1", "pola", date1, 1, "Project 1");
+  taskList.addTask("Task 1", "pola", date1, 1, 0);
 
   // Insert project menu button
   drawProjectMenuButton();
@@ -42,7 +42,7 @@ function renderTasks() {
       task.remove();
     });
   }
-  const tasks = taskList.getProjTasks();
+  const tasks = taskList.getActProjTasks();
   for (let ind in tasks) renderTask(tasks[ind]);
 }
 
@@ -79,7 +79,7 @@ function renderTask(taskPar) {
 
   // Add listener to store value into task object
   editName.addEventListener("change", (event) => {
-    taskPar.title = event.target.value;
+    taskPar.title = event.target.value; // This doesn't work!!
     name.textContent = taskPar.title;
   });
 
@@ -139,10 +139,7 @@ function renderTask(taskPar) {
   editPrioSelect.addEventListener("change", (event) => {
     const task =
       event.target.parentElement.parentElement.parentElement.parentElement;
-    // Determine the task position within the list (used as task ID)
-    const ind = [...task.parentNode.children].indexOf(task);
-    taskList.rmTask(ind);
-
+    // Task color based on priority
     switch (parseInt(event.target.value)) {
       case 0:
         task.style.backgroundColor = "#b8dcbd";

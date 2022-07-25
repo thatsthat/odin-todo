@@ -23,38 +23,41 @@ const taskList = (() => {
     details,
     dueDate,
     priority = 1,
-    project = projects[activeProjectInd]
+    projInd = activeProjectInd
   ) => {
-    const task = Task(title, details, dueDate, priority, project);
+    const task = Task(title, details, dueDate, priority, projects[projInd]);
     // Insert the task at the beginning of the array
-    tasks.unshift(task);
+    console.log(tasks, projInd);
+    tasks[projInd].unshift(task);
   };
 
   const rmTask = (taskInd) => {
-    tasks.splice(taskInd, 1);
+    tasks[activeProjectInd].splice(taskInd, 1);
+  };
+
+  const editTask = (ind) => {
+    return activeProjectInd;
   };
 
   const addProject = (projName) => {
     projects.push(projName);
     // Set the new project as the active project
     setActProjInd(activeProjectInd + 1);
+    // Add a new empty array inside tasks 2d array corresponding to the new project
+    tasks.push([]);
   };
 
-  const getAllTasks = () => {
-    return tasks;
-  };
-
-  const getProjTasks = () => {
+  const getActProjTasks = () => {
     // Filter tasks by project
-    return tasks.filter((task) => task.project == projects[activeProjectInd]);
+    return tasks[activeProjectInd];
+    //return tasks.filter((task) => task.project == projects[activeProjectInd]);
   };
 
   return {
     addTask,
     rmTask,
     addProject,
-    getAllTasks,
-    getProjTasks,
+    getActProjTasks,
     setActProjInd,
     getActProjInd,
     tasks,
