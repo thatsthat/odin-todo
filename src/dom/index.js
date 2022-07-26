@@ -94,8 +94,8 @@ function renderTask(ind, taskPar) {
   editDetailsIcon.classList.add("smallIcon", "mdi", "mdi-text");
   editDetails.append(editDetailsIcon, editDetailsInput);
 
-  // Add listener to store title into task object
-  editName.addEventListener("change", (event) => {
+  // Add listener to store details into task object
+  editDetails.addEventListener("change", (event) => {
     const details2 = event.target.value;
     details.textContent = details2;
     taskList.setTaskDetails(ind, details2);
@@ -203,7 +203,7 @@ function renderTask(ind, taskPar) {
   task.addEventListener("focusin", (event) => {
     event.currentTarget.querySelector(".viewElems").classList.add("hidden");
     event.currentTarget.querySelector(".editElems").classList.remove("hidden");
-    event.currentTarget.querySelector(".editElems").firstChild.focus();
+    //event.currentTarget.querySelector(".editElems").firstChild.focus();
   });
 
   // When a task is 'expanded' close it if a click is detected outside
@@ -392,8 +392,6 @@ function drawNewProjectModal() {
     const projInput = document.querySelector("#projNameInput");
     // Store the new project into taskList
     taskList.addProject(projInput.value);
-    // Set the new project as active
-    taskList.setActProjInd(taskList.projects.length - 1);
     // Close the modal
     modal.style.display = "none";
     // Redraw the projects dropdown menu
@@ -406,5 +404,7 @@ function drawNewProjectModal() {
         document.querySelector(".projectButton"),
         document.querySelector(".projectsDropdown")
       );
+    // Draw the tasks for the new project
+    renderTasks();
   });
 }

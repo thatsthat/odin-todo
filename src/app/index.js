@@ -54,7 +54,7 @@ const taskList = (() => {
   const addProject = (projName) => {
     projects.push(projName);
     // Set the new project as the active project
-    setActProjInd(activeProjectInd + 1);
+    setActProjInd(projects.length - 1);
     // Add a new empty array inside tasks 2d array corresponding to the new project
     tasks.push([]);
   };
