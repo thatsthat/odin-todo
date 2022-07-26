@@ -35,8 +35,20 @@ const taskList = (() => {
     tasks[activeProjectInd].splice(taskInd, 1);
   };
 
-  const editTask = (ind) => {
-    return activeProjectInd;
+  const setTaskPrio = (taskInd, prio) => {
+    tasks[activeProjectInd][taskInd].priority = prio;
+  };
+
+  const setTaskTitle = (taskInd, title) => {
+    tasks[activeProjectInd][taskInd].title = title;
+  };
+
+  const setTaskDate = (taskInd, date) => {
+    tasks[activeProjectInd][taskInd].dueDate = date;
+  };
+
+  const setTaskDetails = (taskInd, details) => {
+    tasks[activeProjectInd][taskInd].details = details;
   };
 
   const addProject = (projName) => {
@@ -55,6 +67,10 @@ const taskList = (() => {
 
   return {
     addTask,
+    setTaskPrio,
+    setTaskTitle,
+    setTaskDate,
+    setTaskDetails,
     rmTask,
     addProject,
     getActProjTasks,

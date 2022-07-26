@@ -43,10 +43,10 @@ function renderTasks() {
     });
   }
   const tasks = taskList.getActProjTasks();
-  for (let ind in tasks) renderTask(tasks[ind]);
+  for (let ind in tasks) renderTask(ind, tasks[ind]);
 }
 
-function renderTask(taskPar) {
+function renderTask(ind, taskPar) {
   // Create task container
   const task = document.createElement("div");
   switch (parseInt(taskPar.priority)) {
@@ -77,10 +77,11 @@ function renderTask(taskPar) {
   editName.placeholder = "Title";
   editName.value = taskPar.title;
 
-  // Add listener to store value into task object
+  // Add listener to store title into task object
   editName.addEventListener("change", (event) => {
-    taskPar.title = event.target.value; // This doesn't work!!
-    name.textContent = taskPar.title;
+    const title = event.target.value;
+    taskList.setTaskTitle(ind, title);
+    name.textContent = title;
   });
 
   const editDetails = document.createElement("div");
@@ -93,10 +94,11 @@ function renderTask(taskPar) {
   editDetailsIcon.classList.add("smallIcon", "mdi", "mdi-text");
   editDetails.append(editDetailsIcon, editDetailsInput);
 
-  // Add listener to store value into task object
+  // Add listener to store title into task object
   editName.addEventListener("change", (event) => {
-    taskPar.details = event.target.value;
-    details.textContent = taskPar.details;
+    const details2 = event.target.value;
+    details.textContent = details2;
+    taskList.setTaskDetails(ind, details2);
   });
 
   const editDate = document.createElement("div");
@@ -108,10 +110,11 @@ function renderTask(taskPar) {
   editDateIcon.classList.add("smallIcon", "mdi", "mdi-calendar");
   editDate.append(editDateIcon, editDateInput);
 
-  // Add listener to store value into task object
+  // Add listener to store date into task object
   editDate.addEventListener("change", (event) => {
-    taskPar.dueDate = event.target.value;
-    date.textContent = format(new Date(taskPar.dueDate), "dd-MM-yyyy");
+    const dueDate = event.target.value;
+    taskList.setTaskDate(ind, dueDate);
+    date.textContent = format(new Date(dueDate), "dd-MM-yyyy");
   });
 
   const editPrio = document.createElement("div");
@@ -139,6 +142,8 @@ function renderTask(taskPar) {
   editPrioSelect.addEventListener("change", (event) => {
     const task =
       event.target.parentElement.parentElement.parentElement.parentElement;
+    const taskInd = [...task.parentNode.children].indexOf(task);
+    taskList.setTaskPrio(taskInd, event.target.value);
     // Task color based on priority
     switch (parseInt(event.target.value)) {
       case 0:
