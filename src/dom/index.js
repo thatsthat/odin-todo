@@ -5,7 +5,7 @@ import { format, differenceInDays } from "date-fns";
 
 function renderUI() {
   // Create two projects
-  taskList.addProject("Project 1");
+  /* taskList.addProject("Project 1");
   taskList.addProject("Project 2");
   taskList.setActProjInd(0);
 
@@ -14,7 +14,7 @@ function renderUI() {
   taskList.addTask("Task 2", "hola", date2, 1, 1);
 
   const date1 = format(new Date(2022, 5, 20), "yyyy-MM-dd");
-  taskList.addTask("Task 1", "pola", date1, 1, 0);
+  taskList.addTask("Task 1", "pola", date1, 1, 0); */
 
   // Insert project menu button
   drawProjectMenuButton();
