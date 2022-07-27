@@ -407,4 +407,9 @@ function drawNewProjectModal() {
     // Draw the tasks for the new project
     renderTasks();
   });
+
+  // 'Enter' key is equivalent to done button click
+  modalDialog.addEventListener("keydown", (event) => {
+    if (event.keyCode === 13) doneButton.click();
+  });
 }
